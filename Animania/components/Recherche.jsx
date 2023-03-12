@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, FlatList, Image } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import { Linking } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default function Accueil() {
-  const [topAnime, setTopAnime] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    async function fetchTopAnime() {
-      try {
-        const response = await axios.get('https://api.jikan.moe/v4/top/anime');
-        setTopAnime(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+  async function searchAnime() {
+    try {
+      const response = await axios.get(`https://api.jikan.moe/v4/anime?q=${searchTerm}`);
+      setSearchResults(response.data);
+    } catch (error) {
+      console.error(error);
     }
-    fetchTopAnime();
-  }, []);
+  }
 
   return (
     <View style={styles.container}>      
@@ -25,18 +24,25 @@ export default function Accueil() {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Animania</Text>
       </View>
-      <View style={styles.topContainer}>
-        <Text style={styles.topTitle}>Top Animé</Text>
+      <View style={styles.searchContainer}>
+        <TextInput
+          placeholder="One Piece..."
+          style={styles.searchInput}
+          value={searchTerm}
+          onChangeText={setSearchTerm}
+        />
+        <TouchableOpacity style={styles.searchButton} onPress={searchAnime}>
+          <FontAwesome name="search" size={24} color="white" />          
+        </TouchableOpacity>
       </View>
       <View style={styles.AnimeContainer}>
         <FlatList
-          data={topAnime.data}
+          data={searchResults.data}
           keyExtractor={(item) => item.mal_id.toString()}
           renderItem={({ item }) => (
             <View style={styles.topAnimeItem}>
               <Image source={{ uri: item.images.jpg.image_url }} style={styles.AnimeItemImage} />
               <Text style={styles.AnimeItemTitle}>{item.title})</Text>
-              <Text style={styles.AnimeItemRank}>#{item.rank}</Text>
               <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.url)}>
                   <Text style={styles.buttonText}>Voir sur MyAnimeList</Text>
@@ -47,7 +53,7 @@ export default function Accueil() {
           showsHorizontalScrollIndicator={false}
           numColumns={2}  // Ajout de la prop "numColumns"
         />
-      </View>      
+      </View>       
     </View>
   );
 }
@@ -70,13 +76,29 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontWeight: 'bold',
   },
-  topContainer:{
+  searchContainer: {
     flexDirection: 'row',
-    marginLeft: 50,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 5,
   },
-  topTitle:{
-    fontSize: 18,
-    fontWeight: 'bold',
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingHorizontal: 20,
+    marginRight: 10,
+  },
+  searchButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   AnimeContainer: {
     marginTop: 5,
