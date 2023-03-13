@@ -1,14 +1,36 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { StatusBar } from 'expo-status-bar';
+import { auth } from '../firebase';
+import { useNavigation } from "@react-navigation/native";
 
-const Profil = () => {
+export default function Profil() {
   return (
-    <View>
-      <Text>Profil</Text>
+    <View style={styles.container}>      
+        <StatusBar style="auto" />
+        <View style={styles.titleContainer}>
+            <Text style={styles.title}>Animania</Text>
+        </View>
     </View>
   )
 }
 
-export default Profil
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    position: 'relative',
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    marginTop: 30,
+  },
+  title: {
+    fontSize: 40,
+    color: 'blue',
+    fontWeight: 'bold',
+  },
+});

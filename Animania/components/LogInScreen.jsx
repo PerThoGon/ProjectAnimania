@@ -2,6 +2,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-nati
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {auth} from "../firebase";
+import Accueil from "./Accueil";
 
 export default function Profil() {
     const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ export default function Profil() {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
-            navigation.navigate("TabBar", {Screen : TabBar});
+            navigation.navigate("TabBar", {Screen : Accueil});
         }
         });
         return unsubscribe;

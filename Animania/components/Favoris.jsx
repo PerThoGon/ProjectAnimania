@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { StatusBar } from 'expo-status-bar';
 
-export default function Profil() {
+export default function Favoris() {
     return (
       <View style={styles.container}>      
           <StatusBar style="auto" />
