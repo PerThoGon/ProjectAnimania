@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, PrivateValueStore } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Accueil from './components/Accueil';
@@ -41,7 +41,7 @@ function ProfilScreen() {
   );
 }
 
-export default function App() {
+function TabBar() {
   return (
     <NavigationContainer>
       <tab.Navigator
@@ -68,6 +68,13 @@ export default function App() {
       </tab.Navigator>
     </NavigationContainer>
   );
+}
+
+export default function App(){
+  return
+    <View>
+      <Profil/>
+    </View>
 }
 
 const styles = StyleSheet.create({
