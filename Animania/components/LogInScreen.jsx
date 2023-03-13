@@ -12,7 +12,7 @@ export default function Profil() {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
         if (user) {
-            navigation.replace("LoginScreen");
+            navigation.navigate("TabBar", {Screen : TabBar});
         }
         });
         return unsubscribe;

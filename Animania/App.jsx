@@ -29,13 +29,13 @@ function TabBar() {
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
-          if (route. name == "Accueil") {
+          if (route. name === "Accueil") {
             iconName = "home-outline"
-          } else if (route. name == "Recherche") {
+          } else if (route. name === "Recherche") {
             iconName = "search-outline"
-          } else if (route. name == "Favoris") {
+          } else if (route. name === "Favoris") {
             iconName = "star-outline"
-          } else if (route. name == "Profil") {
+          } else if (route. name === "Profil") {
             iconName = "person-outline"
           }
           return <Ionicons name={iconName} size={20} color='#000'/>
