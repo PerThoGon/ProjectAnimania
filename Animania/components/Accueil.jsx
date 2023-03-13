@@ -26,7 +26,7 @@ export default function Accueil() {
         <Text style={styles.title}>Animania</Text>
       </View>
       <View style={styles.topContainer}>
-        <Text style={styles.topTitle}>Top Animé</Text>
+        <Text style={styles.topTitle}>Top Animé actuel :</Text>
       </View>
       <View style={styles.AnimeContainer}>
         <FlatList
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   },
   topContainer:{
     flexDirection: 'row',
-    marginLeft: 50,
+    marginLeft: 20,
   },
   topTitle:{
     fontSize: 18,

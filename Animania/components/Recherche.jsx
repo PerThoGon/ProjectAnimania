@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Linking } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
-export default function Accueil() {
+export default function Recherche() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
