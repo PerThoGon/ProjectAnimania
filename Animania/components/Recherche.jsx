@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   topAnimeItem: {
     width: '48%',
     marginBottom: 20,
+    marginLeft: 5,
   },
   AnimeItemImage: {
     width: '100%',
