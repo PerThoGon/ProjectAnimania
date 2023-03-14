@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, Modal, ScrollView, } from 'react-native';
 import axios from 'axios';
 import { Linking } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 export default function Accueil() {
   const [topAnime, setTopAnime] = useState([]);
+  const [isVueAnimeModalVisible, setisVueAnimeModalVisible] = useState(false);
+  const [selectedAnime, setSelectedAnime] = useState(null);
 
   useEffect(() => {
     async function fetchTopAnime() {
@@ -18,6 +20,16 @@ export default function Accueil() {
     }
     fetchTopAnime();
   }, []);
+
+  function vueAnime(item) {
+    setSelectedAnime(item);
+    setisVueAnimeModalVisible(true);
+  }
+
+  function closeModal() {
+    setisVueAnimeModalVisible(false);
+    setSelectedAnime(null);
+  }
 
   return (
     <View style={styles.container}>      
@@ -34,10 +46,12 @@ export default function Accueil() {
           keyExtractor={(item) => item.mal_id.toString()}
           renderItem={({ item }) => (
             <View style={styles.topAnimeItem}>
-              <Image source={{ uri: item.images.jpg.image_url }} style={styles.AnimeItemImage} />
-              <Text style={styles.AnimeItemTitle}>{item.title})</Text>
-              <Text style={styles.AnimeItemRank}>#{item.rank}</Text>
-              <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={() => vueAnime(item)}>
+                <Image source={{ uri: item.images.jpg.image_url }} style={styles.AnimeItemImage} />
+                <Text style={styles.AnimeItemTitle}>{item.title}</Text>
+                <Text style={styles.AnimeItemRank}>#{item.rank}</Text>
+              </TouchableOpacity>
+              <View>
                 <TouchableOpacity style={styles.button} onPress={() => Linking.openURL(item.url)}>
                   <Text style={styles.buttonText}>Voir sur MyAnimeList</Text>
                 </TouchableOpacity>
@@ -47,7 +61,31 @@ export default function Accueil() {
           showsHorizontalScrollIndicator={false}
           numColumns={2}  // Ajout de la prop "numColumns"
         />
-      </View>      
+      </View>
+      {selectedAnime && (
+        <View>
+          <Modal visible={isVueAnimeModalVisible} onRequestClose={closeModal}>
+            <StatusBar style="auto" />
+            <View style={styles.titleContainer}>
+              <Text style={styles.title}>Animania</Text>
+            </View>
+            <View style={styles.modalContainer}>
+              <Image source={{ uri: selectedAnime.images.jpg.image_url }} style={styles.modalImage} />
+              <Text style={styles.modalTitle}>{selectedAnime.title}</Text>
+              <ScrollView style={styles.Scroll}>
+                <Text style={styles.modalText}>{selectedAnime.synopsis}</Text>
+                <Text style={styles.modalText}>Score: {selectedAnime.score}</Text>
+                <TouchableOpacity style={styles.modalButtonTexte} onPress={() => Linking.openURL(selectedAnime.url)}>
+                  <Text style={styles.buttonText}>Voir sur MyAnimeList</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.modalButton} onPress={closeModal}>
+                  <Text style={styles.modalButtonText}>Retour</Text>
+                </TouchableOpacity>
+              </ScrollView>
+            </View>
+          </Modal>
+        </View>
+      )}      
     </View>
   );
 }
@@ -63,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    marginTop: 30,
+    marginTop: 25,
   },
   title: {
     fontSize: 40,
@@ -112,5 +150,42 @@ const styles = StyleSheet.create({
   topAnimeEpisodes: {
     fontSize: 14,
     color: 'gray',
+  },
+  modalContainer:{
+    alignItems: 'center',
+    padding: 20,
+  },
+  modalImage:{
+    width: '60%',
+    height: 330,
+  },
+  modalTitle:{
+    marginTop: '5%',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  modalText: {
+    marginTop: '5%',
+  },
+  Scroll: {
+    alignContent: 'center',
+    height: 330,
+  },
+  modalButtonTexte: {
+    width: "100%",
+    marginTop: '5%',
+  },
+  modalButton:{
+    marginTop: '5%',
+    backgroundColor: "blue",
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalButtonText: {
+    color: "white",
+    fontWeight: 700,
+    fontSize: 16,
   },
 });
