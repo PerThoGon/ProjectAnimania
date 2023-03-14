@@ -12,6 +12,54 @@ const tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 export default function App(){
+  function TabBar() {
+    return (    
+      <tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+            if (route. name === "Accueil") {
+              iconName = "home-outline"
+            } else if (route. name === "Recherche") {
+              iconName = "search-outline"
+            } else if (route. name === "Profil") {
+              iconName = "person-outline"
+            }
+            return <Ionicons name={iconName} size={20} color='#000'/>
+          }
+        })} 
+      >
+        <tab.Screen name='Accueil' component={AccueilScreen} options={{ headerShown: false }}/>
+        <tab.Screen name='Recherche' component={RechercheScreen} options={{ headerShown: false }}/>
+        <tab.Screen name='Profil' component={ProfilScreen} options={{ headerShown: false }}/>
+      </tab.Navigator>
+    );
+  }
+
+  function AccueilScreen() {
+    return (
+      <View style={styles.container}>
+        <Accueil/>
+      </View>    
+    );
+  }
+  
+  function RechercheScreen() {
+    return (
+      <View style={styles.container}>
+        <Recherche/>
+      </View>
+    );
+  }
+  
+  function ProfilScreen() {
+    return (
+      <View style={styles.container}>
+        <Profil />
+      </View>    
+    );
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LoginScreen" >
@@ -35,53 +83,7 @@ export default function App(){
   )
 }
 
-function TabBar() {
-  return (    
-    <tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          if (route. name === "Accueil") {
-            iconName = "home-outline"
-          } else if (route. name === "Recherche") {
-            iconName = "search-outline"
-          } else if (route. name === "Profil") {
-            iconName = "person-outline"
-          }
-          return <Ionicons name={iconName} size={20} color='#000'/>
-        }
-      })} 
-    >
-      <tab.Screen name='Accueil' component={AccueilScreen} options={{ headerShown: false }}/>
-      <tab.Screen name='Recherche' component={RechercheScreen} options={{ headerShown: false }}/>
-      <tab.Screen name='Profil' component={ProfilScreen} options={{ headerShown: false }}/>
-    </tab.Navigator>
-  );
-}
-
-function AccueilScreen() {
-  return (
-    <View style={styles.container}>
-      <Accueil/>
-    </View>    
-  );
-}
-
-function RechercheScreen() {
-  return (
-    <View style={styles.container}>
-      <Recherche/>
-    </View>
-  );
-}
-
-function ProfilScreen() {
-  return (
-    <View style={styles.container}>
-      <Profil />
-    </View>    
-  );
-}  
+ 
 
 
 const styles = StyleSheet.create({
