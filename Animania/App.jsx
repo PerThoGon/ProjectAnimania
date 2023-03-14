@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Accueil from './components/Accueil';
-import Favoris from './components/Favoris';
 import Profil from './components/Profil';
 import Recherche from './components/Recherche';
 import LoginScreen from './components/LogInScreen';
@@ -46,8 +45,6 @@ function TabBar() {
             iconName = "home-outline"
           } else if (route. name === "Recherche") {
             iconName = "search-outline"
-          } else if (route. name === "Favoris") {
-            iconName = "star-outline"
           } else if (route. name === "Profil") {
             iconName = "person-outline"
           }
@@ -57,7 +54,6 @@ function TabBar() {
     >
       <tab.Screen name='Accueil' component={AccueilScreen} options={{ headerShown: false }}/>
       <tab.Screen name='Recherche' component={RechercheScreen} options={{ headerShown: false }}/>
-      <tab.Screen name='Favoris' component={FavorisScreen} options={{ headerShown: false }}/>
       <tab.Screen name='Profil' component={ProfilScreen} options={{ headerShown: false }}/>
     </tab.Navigator>
   );
@@ -75,14 +71,6 @@ function RechercheScreen() {
   return (
     <View style={styles.container}>
       <Recherche/>
-    </View>
-  );
-}
-
-function FavorisScreen() {
-  return (
-    <View style={styles.container}>
-      <Favoris />
     </View>
   );
 }
