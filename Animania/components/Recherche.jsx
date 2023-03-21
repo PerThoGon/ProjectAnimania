@@ -80,7 +80,7 @@ export default function Recherche() {
               <Text style={styles.modalTitle}>{selectedAnime.title}</Text>
               <ScrollView style={styles.Scroll}>
                 <Text style={styles.modalText}>{selectedAnime.synopsis}</Text>
-                <Text style={styles.modalText}>Score: {selectedAnime.score}</Text>
+                <Text style={styles.modalText}>Score: {selectedAnime.score}/10</Text>
                 <TouchableOpacity style={styles.modalButtonTexte} onPress={() => Linking.openURL(selectedAnime.url)}>
                   <Text style={styles.buttonText}>Voir sur MyAnimeList</Text>
                 </TouchableOpacity>
